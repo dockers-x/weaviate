@@ -20,7 +20,7 @@ jobs:
       - name: Resolve latest 1.36.x and skip if built
         id: check
         run: |
-          TAG=$(curl -s "https://cr.weaviate.io/v2/repositories/semitechnologies/weaviate/tags/list" | jq -r ".tags[]" 2>/dev/null | grep -E "^1\.36\.[0-9]+$" | sort -V | tail -1)
+          TAG=$(curl -s "https://registry-1.docker.io/v2/repositories/semitechnologies/weaviate/tags/list" | jq -r ".tags[]" 2>/dev/null | grep -E "^1\.36\.[0-9]+$" | sort -V | tail -1)
           if [ -z "$TAG" ]; then
             TAG=$(curl -sL -H "Authorization: Bearer $(curl -s "https://auth.docker.io/token?service=registry.docker.io&scope=repository:semitechnologies/weaviate:pull" | jq -r .token)" "https://registry-1.docker.io/v2/semitechnologies/weaviate/tags/list" | jq -r ".tags[]" | grep -E "^1\.36\.[0-9]+$" | sort -V | tail -1)
           fi
